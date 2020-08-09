@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fonts-->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/fontawesome/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/pe-icon/pe-icon.css' %}">
+    <!-- Vendors-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/bootstrap/grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/magnific-popup/magnific-popup.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'vendors/swiper/swiper.css' %}">
+    <!-- App & fonts-->
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Oswald:400,600|Playfair+Display:400i">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<![endif]-->
+</head>
+
+<body>
+
+    <!-- preload -->
+    <div class="preload" id="preload">
+        <div class="cssload-spin-box"></div>
+    </div><!-- End / preload -->
+
+    <div class="page-wrap">
+
+        <!-- header -->
+        <header class="header header-fixheight header--fixed">
+            <div class="container">
+                <div class="header__inner">
+                    <div class="header-logo"><a href="{% url 'index' %}"><img src="assets/img/logo_white.png"
+                                alt="" /></a>
+                    </div>
+
+                    <!-- raising-nav -->
+                    <nav class="raising-nav">
+
+                        <!-- raising-menu -->
+                        <ul class="raising-menu">
+                            <li class="current-menu-item"><a href="#id1">Home</a></li>
+                            <li><a href="{% url 'index' %}#id2">About</a></li>
+                            <li><a href="{% url 'index' %}#id3">Service</a></li>
+                            <li><a href="{% url 'index' %}#id4">Operations</a></li>
+                            <li><a href="{% url 'index' %}#id7">contact us</a></li>
+
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'dashboard' %}">{{ user.username }}</a></li>
+                            <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'account_login' %}">Login</a></li>
+                            <li><a href="{% url 'account_signup' %}">Signup</a></li>
+                            {% endif %}
+                        </ul><!-- raising-menu -->
+
+                        <div class="navbar-toggle"><i class="fa fa-bars"></i></div>
+                    </nav><!-- End / raising-nav -->
+                </div>
+            </div>
+        </header><!-- End / header -->

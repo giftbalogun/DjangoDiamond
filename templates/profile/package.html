@@ -1,0 +1,200 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ============================================================== -->
+<!-- wrapper  -->
+<!-- ============================================================== -->
+<div class="dashboard-wrapper">
+    <div class="influence-profile">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h3 class="mb-2">{{ user.get_full_name }}</h3>
+                        <p class="pageheader-text">
+                            Proin placerat ante duiullam scelerisque a velit ac porta, fusce
+                            sit amet vestibulum mi. Morbi lobortis pulvinar quam.
+                        </p>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#" class="breadcrumb-link">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        {{ user.get_full_name }}
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- ============================================================== -->
+                <!-- profile -->
+                <!-- ============================================================== -->
+                {% include "profile/profileview.html" %}
+                <!-- ============================================================== -->
+                <!-- end profile -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- campaign data -->
+                <!-- ============================================================== -->
+                <div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
+                    <!-- ============================================================== -->
+                    <!-- campaign tab one -->
+                    <!-- ============================================================== -->
+                    <div class="influence-profile-content pills-regular">
+                        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-selectp-tab" data-toggle="pill" href="#pills-selectp"
+                                    role="tab" aria-controls="pills-selectp" aria-selected="true">Select Package</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-packages-tab" data-toggle="pill" href="#pills-packages"
+                                    role="tab" aria-controls="pills-packages" aria-selected="false">Pay for Packages</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <div class="tab-pane fade" id="pills-selectp" role="tabpanel"
+                                aria-labelledby="pills-slectp-tab">
+                                <div class="card">
+                                    <h5 class="card-header">Update Your Profile</h5>
+                                    <div class="card-body">
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class=" row">
+                                                <div
+                                                    class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
+
+                                                    <div class="form-group">
+                                                        <label for="name">Username</label>
+                                                        <input type="text" name="username"
+                                                            class="form-control form-control-lg" id="usernamename"
+                                                            value="{{ user.username }}" disabled>
+                                                        <p>To Change Username Kindly Send Us an Email</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Your Email</label>
+                                                        <input type="email" class="form-control form-control-lg"
+                                                            id="email" value="{{ user.email }}" disabled>
+                                                        <p>To Change Email Kindly Send Us an Email</p>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="name">Select Package</label>
+                                                        <select name="package" class="form-control" id="package">
+                                                            <option value="Select package">Select Package</option>
+                                                            {% for package in queryset %}
+                                                            <option value="{{ package.id }}">{{ package.title }}
+                                                                N{{ package.price }}
+                                                            </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                    {{ form }}
+
+                                                    <button type="submit" class="btn btn-primary float-right">Update
+                                                        Package
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="pills-packages" role="tabpanel"
+                                aria-labelledby="pills-packages-tab">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="section-block">
+                                            <h2 class="section-title">My Packages</h2>
+                                        </div>
+                                    </div>
+                                    {% for package in queryset %}
+                                    {% if package.id == user.userprofile.package.id %}
+                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+
+                                        <div class="card">
+                                            <div class="card-header bg-primary text-center p-3 ">
+                                                <h4 class="mb-0 text-white"> {{ package.title }}</h4>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <h1 class="mb-1">N{{ package.price }}</h1>
+                                                <p>Per Month Plateform</p>
+                                            </div>
+                                            <div class="card-body border-top">
+                                                <ul class="list-unstyled bullet-check font-14">
+                                                    <li>Facebook, Instagram, Pinterest,Snapchat.</li>
+                                                    <li>Guaranteed follower growth for increas brand awareness.</li>
+                                                    <li>Daily updates on choose platforms</li>
+                                                    <li>Stronger customer service through daily interaction</li>
+                                                    <li>Monthly progress report</li>
+                                                    <li>1 Million Followers</li>
+                                                </ul>
+                                                <button class="btn btn-outline-secondary btn-block btn-lg">Get
+                                                    Started</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end campaign tab one -->
+                    <!-- ============================================================== -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- end campaign data -->
+                <!-- ============================================================== -->
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end content -->
+    <!-- ============================================================== -->
+    <div class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    Copyright © 2018 Concept. All rights reserved. Dashboard by
+                    <a href="https://colorlib.com/wp/">Colorlib</a>
+                    .
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="text-md-right footer-links d-none d-sm-block">
+                        <a href="javascript: void(0);">About</a>
+                        <a href="javascript: void(0);">Support</a>
+                        <a href="javascript: void(0);">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end footer -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end wrapper -->
+<!-- ============================================================== -->
+</div>
+{% endblock content %}

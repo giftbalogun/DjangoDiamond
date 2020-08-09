@@ -1,0 +1,191 @@
+{% extends 'profile/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- ============================================================== -->
+<!-- wrapper  -->
+<!-- ============================================================== -->
+<div class="dashboard-wrapper">
+    <div class="influence-profile">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h3 class="mb-2">Influencer Profile</h3>
+                        <p class="pageheader-text">
+                            Proin placerat ante duiullam scelerisque a velit ac porta, fusce
+                            sit amet vestibulum mi. Morbi lobortis pulvinar quam.
+                        </p>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#" class="breadcrumb-link">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Influencer Profile
+                                        Template
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- ============================================================== -->
+                <!-- profile -->
+                <!-- ============================================================== -->
+                {% include "profile/profileview.html" %}
+                <!-- ============================================================== -->
+                <!-- end profile -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- campaign data -->
+                <!-- ============================================================== -->
+                <div class="col-xl-9 col-lg-9 col-md-7 col-sm-12 col-12">
+                    <!-- ============================================================== -->
+                    <!-- campaign tab one -->
+                    <!-- ============================================================== -->
+                    <div class="influence-profile-content pills-regular">
+                        <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-msg-tab" data-toggle="pill" href="#pills-msg" role="tab"
+                                    aria-controls="pills-msg" aria-selected="false">Update Your Profile</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade" id="pills-msg" role="tabpanel" aria-labelledby="pills-msg-tab">
+                                <div class="card">
+                                    <h5 class="card-header">Update Your Profile</h5>
+                                    <div class="card-body">
+                                        {% if messages %} {% for message in messages %}
+                                        <p class="alert alert-info">{{ message }}</p>
+                                        {% endfor %} {% endif %}
+                                        <form method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class=" row">
+                                                <div
+                                                    class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <input type="text" class="form-control form-control-lg"
+                                                                    name="first_name" value="{{ user.first_name }}"
+                                                                    required="required">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control form-control-lg"
+                                                                    name="last_name" value="{{ user.last_name }}"
+                                                                    required="required">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Username</label>
+                                                        <input type="text" name="username"
+                                                            class="form-control form-control-lg" id="usernamename"
+                                                            value="{{ user.username }}" disabled>
+                                                        <p>To Change Username Kindly Send Us an Email</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Your Email</label>
+                                                        <input type="email" class="form-control form-control-lg"
+                                                            id="email" value="{{ user.email }}" disabled>
+                                                        <p>To Change Email Kindly Send Us an Email</p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Bank Name</label>
+                                                        <input type="text" name="bankname"
+                                                            class="form-control form-control-lg"
+                                                            value="{{ user.userprofile.bankname }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Account Name</label>
+                                                        <input type="text" name="accountname"
+                                                            class="form-control form-control-lg"
+                                                            value="{{ user.userprofile.accountname }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="name">Bank Account Number</label>
+                                                        <input type="text" name="bankacc"
+                                                            class="form-control form-control-lg"
+                                                            value="{{ user.userprofile.bankacc }}">
+                                                    </div>
+                                                    <div class="custom-file mb-3">
+                                                        <input type="file" name="photo" class="custom-file-input"
+                                                            id="customFile">
+                                                        <label class="custom-file-label" for="customFile">Update
+                                                            Photo</label>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="name">{{ user.userprofile.package.title }}</label>
+                                                        <select name=" package" class="form-control" id="package">
+                                                            <option value="{{ user.userprofile.package.title }}">Select
+                                                                Package</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-primary float-right">
+                                                        Update
+                                                        Profile
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end campaign tab one -->
+                    <!-- ============================================================== -->
+                </div>
+                <!-- ============================================================== -->
+                <!-- end campaign data -->
+                <!-- ============================================================== -->
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end content -->
+    <!-- ============================================================== -->
+    <div class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    Copyright © 2018 Concept. All rights reserved. Dashboard by
+                    <a href="https://colorlib.com/wp/">Colorlib</a>
+                    .
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <div class="text-md-right footer-links d-none d-sm-block">
+                        <a href="javascript: void(0);">About</a>
+                        <a href="javascript: void(0);">Support</a>
+                        <a href="javascript: void(0);">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- end footer -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end wrapper -->
+<!-- ============================================================== -->
+</div>
+{% endblock content %}

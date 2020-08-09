@@ -1,0 +1,83 @@
+{% include "includes/head.html" %}
+{% load static %}
+
+<section class="md-section" id="id7">
+    <div style="margin-top: 300px;" class="row">
+        <div class="col-lg-8 col-xs-offset-0 col-sm-offset-0 col-md-offset-0 col-lg-offset-2 ">
+
+            <!-- sec-title -->
+            <div class="sec-title sec-title__lg-title md-text-center">
+                <h2 class="sec-title__title">Contact us</h2><span class="sec-title__divider"></span>
+
+                {% include 'includes/_alert.html' %}
+                {% if form.non_field_errors %}
+                <ul class='form-errors'>
+                    {% for error in form.non_field_errors %}
+                    <li class="list-group-item list-group-item-success">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div><!-- End / sec-title -->
+
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9  col-lg-push-3">
+                <div class="main-content">
+                    <div class="row">
+                        <div class="col-lg-9 ">
+                            <form class="contact-form" action="{% url 'account_login' %}" method="POST">
+                                {% csrf_token %}
+                                <!-- form-item -->
+                                <div class="form-item">
+                                    <input class="form-control" type="text" name="login" placeholder="Username" />
+                                </div><!-- End / form-item -->
+
+                                <!-- form-item -->
+                                <div class="form-item">
+                                    <input class="form-control" type="password" name="password"
+                                        placeholder="Password" />
+                                </div><!-- End / form-item -->
+
+                                <button style="display: flex; justify-content: center;"
+                                    class="btn btn-primary btn-round mb-30" type="submit">Login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- footer-01 -->
+<footer style="position: fixed; bottom: 0; width: 100%;" class="footer-01 md-skin-dark">
+
+    <!-- copyright-01 -->
+    <div class="copyright-01 md-text-center">
+        <div class="container">
+            <p class="copyright-01__copy">2020 &copy; Copyright Awe7. All rights Reserved.</p>
+        </div>
+    </div><!-- End / copyright-01 -->
+
+</footer><!-- End / footer-01 -->
+
+</div>
+<!-- Vendors-->
+<script type="text/javascript" src="{% static 'vendors/_jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/isotope-layout/isotope.pkgd.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/jquery.matchHeight/jquery.matchHeight.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/masonry-layout/masonry.pkgd.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/swiper/swiper.jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/jquery-one-page/jquery.nav.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/menu/menu.js' %}"></script>
+<script type="text/javascript" src="{% static 'vendors/jquery.waypoints/jquery.waypoints.min.js' %}"></script>
+<!-- App-->
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

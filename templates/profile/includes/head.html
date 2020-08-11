@@ -44,7 +44,8 @@
                                 <div class="nav-user-info">
                                     <h5 class="mb-0 text-white nav-user-name">{{ user.first_name }} {{ user.last_name }}
                                     </h5>
-                                    <span class="status"></span><span class="ml-2">Available</span>
+                                    <span class="status"></span><span class="ml-2">{%if user.userprofile.paid %}
+                                        Unlimited {%else %} Avaiables {%endif%}</span>
                                 </div>
                                 <a class="dropdown-item" href="{% url 'profileview' %}"><i
                                         class="fas fa-user mr-2"></i>Account</a>

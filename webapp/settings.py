@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+from python_paystack.paystack_config import PaystackConfig
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -176,3 +177,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 PASSWORD_RESET_TIMEOUT_DAYS = 2
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
+
+
+PaystackConfig.SECRET_KEY = 'sk_test_f7e947052743b341da31891f7565b11d53f1ac37'
+PaystackConfig.PUBLIC_KEY = 'pk_test_9f333bd69a6027cc33c3bd7b6b334ffd179daa87'

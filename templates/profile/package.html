@@ -70,51 +70,51 @@
 
                             <div class="tab-pane fade" id="pills-selectp" role="tabpanel"
                                 aria-labelledby="pills-slectp-tab">
-                                <div class="card">
-                                    <h5 class="card-header">Update Your Profile</h5>
-                                    <div class="card-body">
-                                        <form method="post" enctype="multipart/form-data">
-                                            {% csrf_token %}
-                                            <div class=" row">
-                                                <div
-                                                    class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
-
-                                                    <div class="form-group">
-                                                        <label for="name">Username</label>
-                                                        <input type="text" name="username"
-                                                            class="form-control form-control-lg" id="usernamename"
-                                                            value="{{ user.username }}" disabled>
-                                                        <p>To Change Username Kindly Send Us an Email</p>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="email">Your Email</label>
-                                                        <input type="email" class="form-control form-control-lg"
-                                                            id="email" value="{{ user.email }}" disabled>
-                                                        <p>To Change Email Kindly Send Us an Email</p>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for="name">Select Package</label>
-                                                        <select name="package" class="form-control" id="package">
-                                                            <option value="Select package">Select Package</option>
-                                                            {% for package in queryset %}
-                                                            <option value="{{ package.id }}">{{ package.title }}
-                                                                N{{ package.price }}
-                                                            </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                    </div>
-
-                                                    {{ form }}
-
-                                                    <button type="submit" class="btn btn-primary float-right">Update
-                                                        Package
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div class="section-block">
+                                            <h2 class="section-title">Available Packages</h2>
+                                        </div>
                                     </div>
+                                    <br>
+                                    {% for package in queryset %}
+                                    <div class="col-xl-3 col-lg-4 col-md-3 col-sm-3 col-3">
+                                        <div class="card">
+                                            <div class="card-header bg-primary text-center p-3 ">
+                                                <h4 class="mb-0 text-white"> {{ package.title }}</h4>
+                                            </div>
+                                            <div class="card-body text-center">
+                                                <h1 class="mb-1">N{{ package.price }}</h1>
+                                                <p>Per Month Plateform</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class=" row">
+                                        <div
+                                            class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-3 col-md-12 col-sm-12 col-12 p-4">
+
+                                            <div class="form-group">
+                                                <label for="name">Select Package</label>
+                                                <select name="package" class="form-control" id="package">
+                                                    <option value="Select package">Select Package</option>
+                                                    {% for package in queryset %}
+                                                    <option value="{{ package.id }}">{{ package.title }}
+                                                        N{{ package.price }}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary float-right">Update
+                                                Package
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
                             <div class="tab-pane fade" id="pills-packages" role="tabpanel"
@@ -122,7 +122,7 @@
                                 <div class="row">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                         <div class="section-block">
-                                            <h2 class="section-title">My Packages</h2>
+                                            <h2 class="section-title">My Current Packages</h2>
                                         </div>
                                     </div>
                                     {% for package in queryset %}
@@ -146,8 +146,9 @@
                                                     <li>Monthly progress report</li>
                                                     <li>1 Million Followers</li>
                                                 </ul>
-                                                <button class="btn btn-outline-secondary btn-block btn-lg">Get
-                                                    Started</button>
+                                                <a href="/user/payment/{{ package.id }}"
+                                                    class="btn btn-outline-secondary btn-block btn-lg">Get
+                                                    Started</a>
                                             </div>
                                         </div>
 

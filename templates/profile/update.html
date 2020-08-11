@@ -130,10 +130,14 @@
 
 
                                                     <div class="form-group">
-                                                        <label for="name">{{ user.userprofile.package.title }}</label>
-                                                        <select name=" package" class="form-control" id="package">
-                                                            <option value="{{ user.userprofile.package.title }}">Select
-                                                                Package</option>
+                                                        <label for="name">Select Package</label>
+                                                        <select name="package" class="form-control" id="package">
+                                                            <option value="Select package">Select Package</option>
+                                                            {% for package in queryset %}
+                                                            <option value="{{ package.id }}">{{ package.title }}
+                                                                N{{ package.price }}
+                                                            </option>
+                                                            {% endfor %}
                                                         </select>
                                                     </div>
 

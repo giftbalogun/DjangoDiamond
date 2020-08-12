@@ -16,10 +16,17 @@
                             data-target="#submenu-1" aria-controls="submenu-1"><i
                                 class="fa fa-fw fa-user-circle"></i>Dashboard</a>
                     </li>
+                    {%if user.userprofile.paid %}
+                    <li class="nav-item ">
+                        <a class="nav-link" aria-expanded="false" data-target="#submenu-1" aria-controls="submenu-1"><i
+                                class="fa fa-fw fa-money-bill-alt"></i>Premium Account</a>
+                    </li>
+                    {%else %}
                     <li class="nav-item ">
                         <a class="nav-link" href="{% url 'package' %}" aria-expanded="false" data-target="#submenu-1"
                             aria-controls="submenu-1"><i class="fa fa-fw fa-user-circle"></i>Select Package</a>
                     </li>
+                    {%endif%}
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false"
                             data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>UI

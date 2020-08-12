@@ -15,7 +15,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('bankname', 'accountname', 'package',  'bankacc')
+        fields = ('bankname', 'accountname', 'package', 'paid',  'bankacc')
 
 
 class PackageForm(forms.ModelForm):
@@ -24,22 +24,7 @@ class PackageForm(forms.ModelForm):
         fields = ('package',)
 
 
-'''
-# iterable
-Packageme = (
-    ("1", "5000"),
-    ("2", "10000"),
-    ("3", "15000"),
-    ("4", "20000"),
-)
-
-
-class PackagesForm(forms.Form):
-    package = forms.ChoiceField(choices=Packageme)
-'''
-
-
-class PersonForm(forms.ModelForm):
+class PaidForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('package',)
+        fields = ('paid',)

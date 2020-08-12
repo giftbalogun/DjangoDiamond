@@ -4,6 +4,12 @@ from django.db.models.signals import post_save
 from PIL import Image
 from accountprofile.models import Package
 
+import uuid
+import base64
+from django.utils.crypto import get_random_string
+
+code = get_random_string(5).upper()  # random cod
+
 
 class UserProfile(models.Model):
     id = models.AutoField(primary_key=True)
@@ -12,8 +18,9 @@ class UserProfile(models.Model):
     bankname = models.CharField(max_length=200, default='')
     bankacc = models.CharField(max_length=100, default='')
     accountname = models.CharField(max_length=100, default='')
-    points = models.IntegerField(default=1)
+    points = models.CharField(max_length=100, default=1)
     paid = models.BooleanField(default=False)
+    referral_code = models.CharField(max_length=6, default=code)
     package = models.ForeignKey(
         Package, on_delete=models.CASCADE, default=True)
 

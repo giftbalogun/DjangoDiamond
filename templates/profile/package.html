@@ -128,29 +128,32 @@
                                     {% for package in queryset %}
                                     {% if package.id == user.userprofile.package.id %}
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-
-                                        <div class="card">
-                                            <div class="card-header bg-primary text-center p-3 ">
-                                                <h4 class="mb-0 text-white"> {{ package.title }}</h4>
+                                        <form id="formdata" method="POST">
+                                            {% csrf_token %}
+                                            <div class="card">
+                                                <div class="card-header bg-primary text-center p-3 ">
+                                                    <h4 class="mb-0 text-white"> {{ package.title }}</h4>
+                                                </div>
+                                                <div class="card-body text-center">
+                                                    <h1 class="mb-1">N{{ package.price }}</h1>
+                                                    <p>Per Month Plateform</p>
+                                                </div>
+                                                <div class="card-body border-top">
+                                                    <ul class="list-unstyled bullet-check font-14">
+                                                        <li>Facebook, Instagram, Pinterest,Snapchat.</li>
+                                                        <li>Guaranteed follower growth for increas brand awareness.</li>
+                                                        <li>Daily updates on choose platforms</li>
+                                                        <li>Stronger customer service through daily interaction</li>
+                                                        <li>Monthly progress report</li>
+                                                        <li>1 Million Followers</li>
+                                                    </ul>
+                                                    <button type="submit" onclick="payWithPaystack()"
+                                                        class="btn btn-outline-secondary btn-block btn-lg">Get
+                                                        Started</button>
+                                                </div>
+                                                <script src="https://js.paystack.co/v1/inline.js"></script>
                                             </div>
-                                            <div class="card-body text-center">
-                                                <h1 class="mb-1">N{{ package.price }}</h1>
-                                                <p>Per Month Plateform</p>
-                                            </div>
-                                            <div class="card-body border-top">
-                                                <ul class="list-unstyled bullet-check font-14">
-                                                    <li>Facebook, Instagram, Pinterest,Snapchat.</li>
-                                                    <li>Guaranteed follower growth for increas brand awareness.</li>
-                                                    <li>Daily updates on choose platforms</li>
-                                                    <li>Stronger customer service through daily interaction</li>
-                                                    <li>Monthly progress report</li>
-                                                    <li>1 Million Followers</li>
-                                                </ul>
-                                                <a href="/user/payment/{{ package.id }}"
-                                                    class="btn btn-outline-secondary btn-block btn-lg">Get
-                                                    Started</a>
-                                            </div>
-                                        </div>
+                                        </form>
 
                                     </div>
                                     {% endif %}
@@ -198,4 +201,62 @@
 <!-- end wrapper -->
 <!-- ============================================================== -->
 </div>
+
+
+
+<script>
+    const formdata = document.getElementById('formdata')
+    formdata.addEventListener("submit", payWithPaystack, false)
+
+    var total_1 = '{{ request.user.userprofile.package.price }}'
+    var tot_naira = (eval(total_1))
+    var ta = ((tot_naira / 100) * 1.5) + 100
+    var total = eval(ta) + tot_naira
+    var public_key = 'pk_test_9f333bd69a6027cc33c3bd7b6b334ffd179daa87'
+    var email = '{{ request.user.email }}'
+    // var e = 'preventDefault()'
+    //var token = '{{ csrf_token }}'
+
+
+    function payWithPaystack(e) {
+        e.preventDefault()
+        let handler = PaystackPop.setup({
+            key: public_key, // Replace with your public key
+            email: email,
+            amount: total.toFixed(2) * 100,
+            ref: '' + Math.floor((Math.random() * 1000000000) +
+                1
+            ),
+            // label: "Optional string that replaces customer email"
+            callback: function (response) {
+                // this happens after the payment is completed successfully
+
+                var res = response
+                var reference = response.reference
+                console.log(response)
+                var order = response.ordercode
+                alert('Payment complete! Reference: ' + reference)
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'paid' %}",
+                    data: $('#formdata').serialize(),
+                    success: function () {
+                        //window.location = "/order/success/{{ code.ordercode }}"
+                        window.location.href = '/user/paid/';
+                        // location.reload()
+                        console.log("Order Placed");
+                        //console.log(order);
+                    }
+                })
+            },
+            onClose: function () {
+                alert('Transaction was not completed, window closed.')
+            },
+        })
+        handler.openIframe()
+    }
+
+</script>
+
+
 {% endblock content %}

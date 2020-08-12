@@ -1,16 +1,12 @@
-from python_paystack.objects.transactions import Transaction
-from python_paystack.managers import TransactionsManager
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, TemplateView
-from allauth.account.forms import ChangePasswordForm
 from django.views.generic.edit import FormView
-from accountprofile.forms import UserUpdateForm, ProfileUpdateForm, PackageForm
+from accountprofile.forms import UserUpdateForm, ProfileUpdateForm, PackageForm, PaidForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from django.views.generic import UpdateView
 from django.contrib.auth.models import User
 from diamond.models import UserProfile
 
@@ -18,6 +14,9 @@ from accountprofile.models import Package
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+import json
+from python_paystack.objects.transactions import Transaction
+from python_paystack.managers import TransactionsManager
 
 
 class IndexView(TemplateView):
@@ -55,18 +54,6 @@ class PackageListView(ListView):
             return redirect('package')
         else:
             return self.form_invalid(pa_form, **kwargs)
-
-    '''
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        # form.send_email()
-        print(form.cleaned_data)
-        form.package = form.cleaned_data['package']
-        form.save()
-        print(form.cleaned_data)
-        return super().form_valid(form)
-        '''
 
 
 @login_required
@@ -112,61 +99,27 @@ def make_payment(request, id):
     if id == packageid:
         transaction = Transaction(total * 100 + 1000, email)
 
+    data = json.JSONDecoder().decode(transaction.to_json())
+
     transaction_manager = TransactionsManager()
     transaction = transaction_manager.initialize_transaction(
-        'STANDARD', transaction)
+        'STANDARD', transaction, callback_url="http://localhost:8000/user/paid/")
     return redirect(transaction.authorization_url)
 
 
-@csrf_exempt
-# @require_http_methods(["POST"])
+@login_required
 def check_payment(request):
-    packageid = request.user.userprofile.package.id
-    price = request.user.userprofile.package.price
-    if request.method == "POST":
-        response = json.loads(request.body)
-        event = response["event"]
-        status = response["data"]["status"]
-        sent_email = response["data"]["customer"]["email"]
-        plan = response["data"]["plan"]["name"]
-        amount_paid = response["data"]["amount"]
-        try:
-            user = get_object_or_404(User, email=sent_email)
-            if event == "charge.success" and status == "success":
-                print("paid")
-                user.userprofile.points = 10000000000
-                if plan == packageid and amount_paid == price:
-                    user.userprofile.plan = "BC"
-                else:
-                    user.userprofile.plan == "BB"
-                user.userprofile.paid = True
-                user.save()
-        except:
-            HttpResponse(status_code=400)
-    return HttpResponse('success')
+    user = request.user
 
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def index(request):
     if request.method == "POST":
-        response = json.loads(request.body)
-        event = response["event"]
-        status = response["data"]["status"]
-        sent_email = response["data"]["customer"]["email"]
-        plan = response["data"]["plan"]["name"]
-        amount_paid = response["data"]["amount"]
-        try:
-            user = get_object_or_404(User, email=sent_email)
-            if event == "charge.success" and status == "success":
-                print("paid")
-                user.userprofile.points = 10000000000
-                if plan == "basic" and amount_paid == 70000:
-                    user.userprofile.plan = "BC"
-                else:
-                    user.userprofile.plan == "BB"
-                user.userprofile.paid = True
-                user.save()
-        except:
-            HttpResponse(status_code=400)
-    return HttpResponse('success')
+        form = PaidForm(request.POST,
+                        instance=request.user.userprofile)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.user.userprofile.points = 10000000000
+            form.user.userprofile.paid = True
+            form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('profileview')
+
+    return redirect('profileview')

@@ -84,7 +84,7 @@
                                                 <h4 class="mb-0 text-white"> {{ package.title }}</h4>
                                             </div>
                                             <div class="card-body text-center">
-                                                <h1 class="mb-1">N{{ package.price }}</h1>
+                                                <h1 class="mb-1">&#8358;{{ package.price }}</h1>
                                                 <p>Per Month Plateform</p>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                                     <option value="Select package">Select Package</option>
                                                     {% for package in queryset %}
                                                     <option value="{{ package.id }}">{{ package.title }}
-                                                        N{{ package.price }}
+                                                        &#8358;{{ package.price }}
                                                     </option>
                                                     {% endfor %}
                                                 </select>

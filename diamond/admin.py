@@ -6,7 +6,8 @@ from diamond.models import UserProfile
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'bankname', 'package', 'is_published')
+    list_display = ('id', 'user', 'bankname', 'package',
+                    'referree', 'is_published')
 
     list_display_links = ('id', 'user')
 

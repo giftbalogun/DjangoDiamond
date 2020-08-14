@@ -102,7 +102,7 @@
                 <!-- ============================================================== -->
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="card">
-                        <h5 class="card-header">Basic Table</h5>
+                        <h5 class="card-header">My Referrals</h5>
                         <div class="card-body">
                             <table class="table">
                                 <thead>
@@ -114,24 +114,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for users in queryset %}
+                                    {% if users.referree == user.userprofile.referree %}
                                     <tr>
+
                                         <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
+                                        <td>{{ users.user.first_name }}</td>
+                                        <td>{{ users.user.last_name }}</td>
+                                        <td>{{ users.referree }}</td>
                                         <td>@mdo</td>
+
+
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

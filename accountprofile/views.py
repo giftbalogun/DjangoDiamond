@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, View
 from django.views.generic.edit import FormView
 from accountprofile.forms import UserUpdateForm, ProfileUpdateForm, PackageForm, PaidForm
 from django.contrib.auth.decorators import login_required
@@ -25,6 +25,12 @@ class IndexView(TemplateView):
 
 class DashboardView(TemplateView):
     template_name = "profile/dashboard.html"
+
+    def get_context_data(self, **kwargs):
+        queryset = UserProfile.objects.order_by('referree')
+        context = super().get_context_data(**kwargs)
+        context['queryset'] = queryset
+        return context
 
 
 class AccountView(TemplateView):

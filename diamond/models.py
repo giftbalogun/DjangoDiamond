@@ -21,6 +21,7 @@ class UserProfile(models.Model):
     points = models.CharField(max_length=100, default=1)
     paid = models.BooleanField(default=False)
     referral_code = models.CharField(max_length=6, default=code)
+    referree = models.CharField(max_length=6, default="1")
     package = models.ForeignKey(
         Package, on_delete=models.CASCADE, default=True)
 

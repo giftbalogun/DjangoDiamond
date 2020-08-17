@@ -28,7 +28,7 @@ SECRET_KEY = '&9&9)#%!1dia7ib$n2@nb1xnb89zc^bo2zi81_7vf4=ux_($ad'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

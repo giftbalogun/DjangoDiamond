@@ -182,3 +182,5 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = "http"
 
 PaystackConfig.SECRET_KEY = 'sk_test_f7e947052743b341da31891f7565b11d53f1ac37'
 PaystackConfig.PUBLIC_KEY = 'pk_test_9f333bd69a6027cc33c3bd7b6b334ffd179daa87'
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

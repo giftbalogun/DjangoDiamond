@@ -18,9 +18,21 @@
                             <p class="hero__desc">Suspendisse ac elit vitae est lacinia interdum eu sit amet mauris.
                                 Phasellus aliquam nisi sit amet</p>
 
+                            {% if user.is_authenticated %}
                             <!-- btn -->
-                            <a class="btn btn-primary" href="#">button
+                            <a class="btn btn-primary" href="{% url 'dashboard' %}">Dashboard
                             </a><!-- End / btn -->
+                            <!-- btn -->
+                            <a class="btn btn-primary" href="{% url 'account_logout' %}">Logout
+                            </a><!-- End / btn -->
+                            {% else %}
+                            <!-- btn -->
+                            <a class="btn btn-primary" href="{% url 'account_login' %}">Just Login
+                            </a><!-- End / btn -->
+                            <!-- btn -->
+                            <a class="btn btn-primary" href="{% url 'account_signup' %}">Signup
+                            </a><!-- End / btn -->
+                            {% endif %}
 
                         </div>
                     </div>

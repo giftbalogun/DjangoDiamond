@@ -2,10 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from PIL import Image
-from accountprofile.models import Package
+from accountprofile.models import Package, Referral
 
-import uuid
-import base64
 from django.utils.crypto import get_random_string
 
 code = get_random_string(5).upper()  # random cod
@@ -21,7 +19,8 @@ class UserProfile(models.Model):
     points = models.CharField(max_length=100, default=1)
     paid = models.BooleanField(default=False)
     referral_code = models.CharField(max_length=6, default=code)
-    referree = models.CharField(max_length=6, default="1")
+    referree = models.ForeignKey(
+        Referral, on_delete=models.CASCADE, default=True)
     package = models.ForeignKey(
         Package, on_delete=models.CASCADE, default=True)
 

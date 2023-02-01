@@ -27,43 +27,16 @@
         <div class="main-content">
           <div class="row">
             <div class="col-lg-9 ">
-              <form class="contact-form" action="{% url 'account_signup' %}" method="POST">
+              <form class="contact-form" id="signup_form" method="post" action="{% url 'account_signup' %}">
                 {% csrf_token %}
 
+                {{ form.as_p }}
+                {% if redirect_field_value %}
                 <!-- form-item -->
                 <div class="form-item">
-                  <input class="form-control" type="text" name="first_name" placeholder="First Name" />
+                  <input class="form-control" type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="text" name="last_name" placeholder="Last Name" />
-                </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="text" name="username" placeholder="Username" />
-                </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="text" name="email" placeholder="email" />
-                </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="text" name="referree" placeholder="Referree (Optional)" />
-                </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="password" name="password1" placeholder="Password" />
-                </div><!-- End / form-item -->
-
-                <!-- form-item -->
-                <div class="form-item">
-                  <input class="form-control" type="password" name="password2" placeholder="Password" />
-                </div><!-- End / form-item -->
+                {% endif %}
 
                 <button class="btn btn-primary btn-round mb-30" type="submit">SignUp</button>
               </form>

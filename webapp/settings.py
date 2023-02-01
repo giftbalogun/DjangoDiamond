@@ -23,7 +23,7 @@ TEMP_DIR = Path(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&9&9)#%!1dia7ib$n2@nb1xnb89zc^bo2zi81_7vf4=ux_($ad'
+SECRET_KEY = '##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -182,7 +182,7 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE=False
 ACCOUNT_SIGNUP_REDIRECT_URL=LOGIN_REDIRECT_URL
 
 
-PaystackConfig.SECRET_KEY = 'sk_test_f7e947052743b341da31891f7565b11d53f1ac37'
-PaystackConfig.PUBLIC_KEY = 'pk_test_9f333bd69a6027cc33c3bd7b6b334ffd179daa87'
+PaystackConfig.SECRET_KEY = '##'
+PaystackConfig.PUBLIC_KEY = '##'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
